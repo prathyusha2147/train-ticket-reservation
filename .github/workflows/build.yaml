@@ -1,9 +1,9 @@
-name: ci pipelineto build the java code
+name: ci pipeline to build the java code
 on:
  push:
    branches: master
   jobs:
-     build:
+  build:
        runs-on: ubuntu-latest
        steps:
         - name: checkout code
@@ -17,6 +17,6 @@ on:
         - name: test with maven
           run: mvn test
         - name: package with maven
-         run: mvn package
+          run: mvn package
         - name: verify war file
-         run: ls -lh target/
+          run: ls -lh target/
