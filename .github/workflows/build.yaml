@@ -1,4 +1,4 @@
-name: ci pipeline to build the java code
+name: CI/CD PIPELINE TO BUILD AND DEPLOY TO TOMCAT
 on:
    push:
      branches: master
