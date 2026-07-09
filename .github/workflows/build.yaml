@@ -13,11 +13,19 @@ jobs:
         - name: checkout code
           uses: actions/checkout@v4
 
-        - name: set up Java
+        - name: Set up Java
           uses: actions/setup-java@v4
           with:
-            java-versiom: '17'
-            
+           distribution: temurin
+           java-version: '17'
+           cache: maven
+
+        - name: Check Java
+          run: java -version
+
+        - name: Check Maven
+          run: mvn -version 
+         
         - name: validate with maven
           run: mvn validate
         - name: compile with maven
@@ -32,7 +40,7 @@ jobs:
           # Deploy to Tomcat
         - name: deploy war to tomcat
           run: 
-             curl -v -u "${{secrets.TOMCAT_USER}}:${{secrets.TOMCAT_PASSWORD }}" \
+             curl -v -u "${{secrets.TOMCAT_USER}}:${{secrets.TOMCAT_PASSWORD}}" \
                 -T target/TrainBook-1.0.0-SNAPSHOT.war \
                 "http://${{secrets.TOMCAT_HOST}}:8080/manager/text/deploy?path=/TrainBook&update=true"
 
