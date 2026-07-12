@@ -37,39 +37,14 @@ jobs:
         - name: verify war file
           run: ls -lh target/
 
-        - name: Deploy WAR to Tomcat
+          # SONAR CUBE CODE QUALITY
+        - name: BUILD, TEST and Sonarqube Scan
           run: |
-            curl -v \
-            -u "${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }}" \
-            -T "target/TrainBook-1.0.0-SNAPSHOT.war" \
-            "http://${{ secrets.TOMCAT_HOST }}:8080/manager/text/deploy?path=/TrainBook&update=true"
-            
-        - name: Deploy WAR file to DEV Tomcat
-          run: |
-            curl -v \
-            -u "${{ secrets.TOMCAT_DEV_USER }}:${{ secrets.TOMCAT_DEV_PASSWORD }}" \
-            -T "target/TrainBook-1.0.0-SNAPSHOT.war" \
-            "http://${{ secrets.TOMCAT_DEV_HOST }}:8080/manager/text/deploy?path=/TrainBook&update=true"
-            
-        - name: Deploy WAR file to TEST to Tomcat
-          run: |
-            curl -v \
-            -u "${{ secrets.TOMCAT_TEST_USER }}:${{ secrets.TOMCAT_TEST_PASSWORD }}" \
-            -T "target/TrainBook-1.0.0-SNAPSHOT.war" \
-            "http://${{ secrets.TOMCAT_TEST_HOST }}:8080/manager/text/deploy?path=/TrainBook&update=true"
-            
-        - name: Deploy WAR file to PREPOD toTomcat
-          run: |
-            curl -v \
-            -u "${{ secrets.TOMCAT_PREPOD_USER }}:${{ secrets.TOMCAT_PREPOD_PASSWORD }}" \
-            -T "target/TrainBook-1.0.0-SNAPSHOT.war" \
-            "http://${{ secrets.TOMCAT_PREPOD_HOST }}:8080/manager/text/deploy?path=/TrainBook&update=true"
+               mv clean sonar: sonar \
+               -Dsonar.projectkey = train-ticket \
+               -Dsonar.host.url = "${{secrets.SONAR_HOST_URL}}" \
+               -Dsonar.login = "${{secrets.SONAR_TOKEN}}"
+          
 
-        - name: Deploy WAR file to PROD to Tomcat
-          run: |
-            curl -v \
-            -u "${{ secrets.TOMCAT_PROD_USER }}:${{ secrets.TOMCAT_PROD_PASSWORD }}" \
-            -T "target/TrainBook-1.0.0-SNAPSHOT.war" \
-            "http://${{ secrets.TOMCAT_PROD_HOST }}:8080/manager/text/deploy?path=/TrainBook&update=true"
-
+       
           
