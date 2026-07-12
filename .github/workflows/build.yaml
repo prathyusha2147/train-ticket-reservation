@@ -40,7 +40,7 @@ jobs:
           # SONAR CUBE CODE QUALITY
         - name: BUILD, TEST and Sonarqube Scan
           run: |
-               mvn clean sonar:sonar \
+               mvn clean verify sonar:sonar \
                   -Dsonar.projectkey=train-ticket \
                   -Dsonar.host.url="${{ secrets.SONAR_HOST_URL }}" \
                   -Dsonar.login="${{ secrets.SONAR_TOKEN }}"
